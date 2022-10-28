@@ -1,0 +1,3 @@
+flex lab104.l
+lab104.l:82: warning, rule cannot be matched
+gcc -o scanner lex.yy.c -lfl
