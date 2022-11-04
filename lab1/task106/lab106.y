@@ -14,7 +14,8 @@ void yyerror(char const *);
 %token ADD SUB MUL DIV
 
  /* begin */
-
+%left ADD SUB /*结合性、优先级*/
+%left MUL DIV
 
  /* end */
 %% 
@@ -23,7 +24,12 @@ void yyerror(char const *);
 calclist:
 	%empty
 	|calclist exp EOL {printf("=%.10g\n",$2);}
+
 exp:term
+	|exp ADD exp {$$ = $1 + $3;}
+	|exp SUB exp {$$ = $1 - $3;}
+	|exp MUL exp {$$ = $1 * $3;}
+	|exp DIV exp {$$ = $1 / $3;}
 	;
 
 term:NUM

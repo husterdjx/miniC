@@ -28,11 +28,12 @@ void yyerror(const char *s);
 %define api.value.type {double}
 %token NUM
 %token EOL
-%token ADD 
-%token SUB 
-%token MUL 
-%token DIV
-%token EXPO
+
+%left ADD SUB/*结合性、优先级*/
+%left MUL DIV
+%right EXPO    /* 幂运算 */
+
+
 %token LP
 %token RP
 
@@ -44,10 +45,14 @@ calclist:
 exp:term
    	|exp ADD exp {$$=$1+$3;}
 	|exp SUB exp {$$=$1-$3;}
+	|exp MUL exp        { $$ = $1 * $3;}
+    |exp DIV exp        { $$ = $1 / $3;}
+    |exp EXPO exp       { $$ = pow ($1, $3); }
 	|error {}
 	;
 
 term:NUM
+	|SUB NUM  {$$ = -$2;}
 	;
 %%
 
