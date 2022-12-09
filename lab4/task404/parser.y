@@ -107,7 +107,7 @@ program: ExtDefList {p=new NProgram($1);if($1) p->line=$1->line;}
         ;
 ExtDefList: {  $$=nullptr;}
         | ExtDef ExtDefList {$$=new NExtDefList(*$1,$2); $$->line=$1->line;}
-        | error SEMI ExtDefList {allerror=1;sprintf(myerror," Error : wrong ");$$=$3;myyyerror();}
+        | error SEMI ExtDefList {printf("1\n");allerror=1;sprintf(myerror," Error : wrong ");$$=$3;myyyerror();}
         ;
 ExtDef: Specifier ExtDecList SEMI {$$=new NExtDefVarDec(*$1,$2);$$->line=$1->line;}
         | Specifier SEMI {$$=new NExtDefVarDec(*$1,nullptr);$$->line=$1->line;} 
@@ -148,7 +148,7 @@ ParamDec: Specifier VarDec {$$=new NParamDec(*$1,*$2);$$->line=$1->line;}
 
 /*Statements*/
 CompSt:   LC DefList StmtList RC {$$=new NCompSt($2,$3);$$->line=$1;}
-        | error RC {allerror=1;sprintf(myerror," big error in Conmpst");$$=NULL;}
+        | error RC {printf("2\n");allerror=1;sprintf(myerror," big error in Conmpst");$$=NULL;}
         ;
 StmtList: {$$=nullptr;}  
         | Stmt StmtList  {$$=new NStmtList(*$1,$2);$$->line=$1->line;}
@@ -160,7 +160,6 @@ Stmt:     Exp SEMI {$$=new NExpStmt(*$1);$$->line=$1->line;}
         | IF LP Exp RP Stmt ELSE Stmt {$$=new NIfElseStmt(*$3,*$5,*$7);$$->line=$1;}
         | WHILE LP Exp RP Stmt {$$= new NWhileStmt(*$3,*$5);$$->line=$1;}
         | BREAK SEMI {$$= new NBreakStmt();$$->line=yylineno;}
-
         | RETURN Exp error SEMI {allerror=1;}
         | IF LP Exp error RC SEMI %prec LOWER_THEN_ELSE   {allerror=1;sprintf(myerror," IF wrong");myyyerror();$$=NULL;}
         | WHILE LP Exp error RP SEMI CompSt error SEMI {allerror=1;sprintf(myerror," WHILE wrong");}

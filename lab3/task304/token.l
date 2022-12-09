@@ -67,7 +67,6 @@ float ([0-9]*\.[0-9]+)|([0-9]+\.)|([0-9]*\.[0-9]+e(-)?[0-9]+)
 "-="		{yylval.line = yylineno;return MINUSASS;}
 "*="		{yylval.line = yylineno;return STARASS;}
 "/="		{yylval.line = yylineno;return DIVASS;}
-"%="		{yylval.line = yylineno;return MODASS;/*模运算可能后期有点难，先不支持*/}
 
 "++"		{yylval.line = yylineno;return PLUSPLUS;}
 "--" 		{yylval.line = yylineno;return MINUSMINUS;}

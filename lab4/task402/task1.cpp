@@ -81,11 +81,8 @@ int main(int argc, char *argv[]) {
   //默认输出函数putchar
   std::vector<Type *> putArgs;
   putArgs.push_back(Type::getInt32Ty(*theContext));
-
-  FunctionType *putType =
-      FunctionType::get(builder->getInt32Ty(), putArgs, false);
-  Function *putFunc = Function::Create(putType, Function::ExternalLinkage,
-                                       "putchar", theModule.get());
+  FunctionType *putType = FunctionType::get(builder->getInt32Ty(), putArgs, false);
+  Function *putFunc = Function::Create(putType, Function::ExternalLinkage, "putchar", theModule.get());
 
   //设置返回类型
   Type *retType = Type::getInt32Ty(*theContext);
@@ -95,8 +92,7 @@ int main(int argc, char *argv[]) {
   //得到函数类型
   FunctionType *ft = FunctionType::get(retType, argsTypes, false);
   //创建函数
-  Function *f =
-      Function::Create(ft, Function::ExternalLinkage, "main", theModule.get());
+  Function *f = Function::Create(ft, Function::ExternalLinkage, "main", theModule.get());
   //为函数的参数设置名字
   unsigned idx = 0;
   for (auto &arg : f->args()) {
@@ -108,23 +104,43 @@ int main(int argc, char *argv[]) {
   // 为参数变量申请空间
   // 无参
   // 创建第一个变量 a
-  AllocaInst *alloca_a =
-      builder->CreateAlloca(Type::getInt32Ty(*theContext), nullptr, "a");
-  //得到常量1
+  AllocaInst *alloca_a = builder->CreateAlloca(Type::getInt32Ty(*theContext), nullptr, "a");
+  // 得到常量1
   Value *const_1 = ConstantInt::get(*theContext, APInt(32, 'H', true));
-  //初始化
+  // 初始化
   builder->CreateStore(const_1, alloca_a);
   Function *calleeF = theModule->getFunction("putchar");
-  //处理参数
+  // 处理参数
   std::vector<Value *> argsV;
-  //加载a
-  Value *load_a4 =
-      builder->CreateLoad(alloca_a->getAllocatedType(), alloca_a, "a");
+  Value *load_a4 = builder->CreateLoad(alloca_a->getAllocatedType(), alloca_a, "a");
   argsV.push_back(load_a4);
-  //判断参数是否符合 自行处理
+  // 判断参数是否符合 自行处理
   Value *callputchar = builder->CreateCall(calleeF, argsV, "callputchar");
   // begin
-  
+  Value *const_2 = ConstantInt::get(*theContext, APInt(32, 'U', true));
+  argsV.clear();
+  argsV.push_back(const_2);
+  Value *callputchar_2 = builder->CreateCall(calleeF, argsV, "callputchar");
+  Value *const_3 = ConstantInt::get(*theContext, APInt(32, 'S', true));
+  argsV.clear();
+  argsV.push_back(const_3);
+  Value *callputchar_3 = builder->CreateCall(calleeF, argsV, "callputchar");
+  Value *const_4 = ConstantInt::get(*theContext, APInt(32, 'T', true));
+  argsV.clear();
+  argsV.push_back(const_4);
+  Value *callputchar_4 = builder->CreateCall(calleeF, argsV, "callputchar");
+  Value *const_5 = ConstantInt::get(*theContext, APInt(32, 'C', true));
+  argsV.clear();
+  argsV.push_back(const_5);
+  Value *callputchar_5 = builder->CreateCall(calleeF, argsV, "callputchar");
+  Value *const_6 = ConstantInt::get(*theContext, APInt(32, 'S', true));
+  argsV.clear();
+  argsV.push_back(const_6);
+  Value *callputchar_6 = builder->CreateCall(calleeF, argsV, "callputchar");
+  Value *const_7 = ConstantInt::get(*theContext, APInt(32, 'E', true));
+  argsV.clear();
+  argsV.push_back(const_7);
+  Value *callputchar_7 = builder->CreateCall(calleeF, argsV, "callputchar");
   // end
   //设置返回值
   builder->CreateRet(const_1);

@@ -5,6 +5,6 @@
 #include "stdlib.h"
 #include "string.h"
 //#include "toy.tab.h"
-#include <bits/stdc++.h>
 #include "astnode.h"
+#include <bits/stdc++.h>
 #endif

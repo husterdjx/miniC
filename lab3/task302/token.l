@@ -50,7 +50,6 @@ float  ([0-9]*\.[0-9]+)|([0-9]+\.)|([0-9]*\.[0-9]+e(-)?[0-9]+)
 "-="		 {return MINUSASS;}
 "*="		 {return STARASS;}
 "/="		 {return DIVASS;}
-"%="		 {return MODASS;/*模运算可能后期有点难，先不支持*/}
 
 "++"		 {return PLUSPLUS;}
 "--" 		 {return MINUSMINUS;}
