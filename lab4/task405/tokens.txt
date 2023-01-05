@@ -1,0 +1,194 @@
+; ModuleID = 'test'
+source_filename = "test"
+
+declare i32 @putchar(i32)
+
+declare i32 @getchar()
+
+define i32 @read() {
+entry:
+  %a = alloca i32
+  store i32 0, i32* %a
+  %b = alloca i32
+  %b1 = load i32, i32* %b
+  %0 = call i32 @getchar()
+  store i32 %0, i32* %b
+  br label %loop
+
+loop:                                             ; preds = %then, %entry
+  %b2 = load i32, i32* %b
+  %cond = icmp ne i32 %b2, 10
+  br i1 %cond, label %then, label %ifcont
+
+then:                                             ; preds = %loop
+  %a3 = load i32, i32* %a
+  %a4 = load i32, i32* %a
+  %mul = mul i32 %a4, 10
+  %b5 = load i32, i32* %b
+  %add = add i32 %mul, %b5
+  %minus = sub i32 %add, 48
+  store i32 %minus, i32* %a
+  %b6 = load i32, i32* %b
+  %1 = call i32 @getchar()
+  store i32 %1, i32* %b
+  br label %loop
+
+ifcont:                                           ; preds = %loop
+  br label %ret
+
+ret:                                              ; preds = %ifcont
+  %a7 = load i32, i32* %a
+  ret i32 %a7
+}
+
+define i32 @write(i32 %a) {
+entry:
+  %a1 = alloca i32
+  store i32 %a, i32* %a1
+  %b = alloca i32
+  store i32 1, i32* %b
+  %c = alloca i32
+  br label %loop
+
+loop:                                             ; preds = %then, %entry
+  %b2 = load i32, i32* %b
+  %a3 = load i32, i32* %a1
+  %cond = icmp sle i32 %b2, %a3
+  br i1 %cond, label %then, label %ifcont
+
+then:                                             ; preds = %loop
+  %b4 = load i32, i32* %b
+  %b5 = load i32, i32* %b
+  %mul = mul i32 %b5, 10
+  store i32 %mul, i32* %b
+  br label %loop
+
+ifcont:                                           ; preds = %loop
+  %b6 = load i32, i32* %b
+  %b7 = load i32, i32* %b
+  %div = sdiv i32 %b7, 10
+  store i32 %div, i32* %b
+  br label %loop8
+
+loop8:                                            ; preds = %then11, %ifcont
+  %a9 = load i32, i32* %a1
+  %cond10 = icmp sge i32 %a9, 10
+  br i1 %cond10, label %then11, label %ifcont27
+
+then11:                                           ; preds = %loop8
+  %c12 = load i32, i32* %c
+  %a13 = load i32, i32* %a1
+  %b14 = load i32, i32* %b
+  %div15 = sdiv i32 %a13, %b14
+  store i32 %div15, i32* %c
+  %a16 = load i32, i32* %a1
+  %a17 = load i32, i32* %a1
+  %c18 = load i32, i32* %c
+  %b19 = load i32, i32* %b
+  %mul20 = mul i32 %c18, %b19
+  %minus = sub i32 %a17, %mul20
+  store i32 %minus, i32* %a1
+  %b21 = load i32, i32* %b
+  %b22 = load i32, i32* %b
+  %div23 = sdiv i32 %b22, 10
+  store i32 %div23, i32* %b
+  %c24 = load i32, i32* %c
+  %c25 = load i32, i32* %c
+  %add = add i32 %c25, 48
+  store i32 %add, i32* %c
+  %c26 = load i32, i32* %c
+  %calltmp = call i32 @putchar(i32 %c26)
+  br label %loop8
+
+ifcont27:                                         ; preds = %loop8
+  %a28 = load i32, i32* %a1
+  %add29 = add i32 %a28, 48
+  %calltmp30 = call i32 @putchar(i32 %add29)
+  %calltmp31 = call i32 @putchar(i32 10)
+  br label %ret
+
+ret:                                              ; preds = %ifcont27
+  %a32 = load i32, i32* %a1
+  ret i32 %a32
+}
+
+define i32 @fibo(i32 %a) {
+entry:
+  %a1 = alloca i32
+  store i32 %a, i32* %a1
+  %a2 = load i32, i32* %a1
+  %cond = icmp eq i32 %a2, 1
+  %a3 = load i32, i32* %a1
+  %cond4 = icmp eq i32 %a3, 2
+  %shandian = alloca i1
+  br i1 %cond, label %then, label %else
+
+then:                                             ; preds = %entry
+  store i1 %cond, i1* %shandian
+  br label %ifcont
+
+else:                                             ; preds = %entry
+  store i1 %cond4, i1* %shandian
+  br label %ifcont
+
+ifcont:                                           ; preds = %else, %then
+  %shandian5 = load i1, i1* %shandian
+  br i1 %shandian5, label %then6, label %ifcont7
+
+then6:                                            ; preds = %ifcont
+  br label %ret
+
+ret:                                              ; preds = %then6
+  ret i32 1
+  br label %ifcont7
+
+ifcont7:                                          ; preds = %ret, %ifcont
+  br label %ret8
+
+ret8:                                             ; preds = %ifcont7
+  %a9 = load i32, i32* %a1
+  %minus = sub i32 %a9, 1
+  %calltmp = call i32 @fibo(i32 %minus)
+  %a10 = load i32, i32* %a1
+  %minus11 = sub i32 %a10, 2
+  %calltmp12 = call i32 @fibo(i32 %minus11)
+  %add = add i32 %calltmp, %calltmp12
+  ret i32 %add
+}
+
+define i32 @main() {
+entry:
+  %m = alloca i32
+  %n = alloca i32
+  %i = alloca i32
+  store i32 1, i32* %i
+  %m1 = load i32, i32* %m
+  %0 = call i32 @read()
+  store i32 %0, i32* %m
+  br label %loop
+
+loop:                                             ; preds = %then, %entry
+  %i2 = load i32, i32* %i
+  %m3 = load i32, i32* %m
+  %cond = icmp sle i32 %i2, %m3
+  br i1 %cond, label %then, label %ifcont
+
+then:                                             ; preds = %loop
+  %n4 = load i32, i32* %n
+  %i5 = load i32, i32* %i
+  %calltmp = call i32 @fibo(i32 %i5)
+  store i32 %calltmp, i32* %n
+  %n6 = load i32, i32* %n
+  %calltmp7 = call i32 @write(i32 %n6)
+  %i8 = load i32, i32* %i
+  %i9 = load i32, i32* %i
+  %add = add i32 %i9, 1
+  store i32 %add, i32* %i
+  br label %loop
+
+ifcont:                                           ; preds = %loop
+  br label %ret
+
+ret:                                              ; preds = %ifcont
+  ret i32 0
+}

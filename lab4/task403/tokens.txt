@@ -1,14 +1,1 @@
-; ModuleID = 'test'
-source_filename = "test"
-
-declare i32 @putchar(i32)
-
-declare i32 @getchar()
-
-define i32 @main() {
-entry:
-  br label %ret
-
-ret:                                              ; preds = %entry
-  ret i32 0
-}
+Error type 3 at Line 3.
